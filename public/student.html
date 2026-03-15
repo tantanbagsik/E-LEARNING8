@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RP-TECH Student Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #007acc;
+            --secondary: #005a9e;
+            --accent: #00d4ff;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --dark: #1a202c;
+            --light: #f8fafc;
+            --text: #2d3748;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--text);
+        }
+        
+        .student-nav {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .student-logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .student-logo i { color: var(--accent); }
+        
+        .student-menu {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .student-menu a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .student-menu a:hover, .student-menu a.active {
+            background: rgba(0,212,255,0.2);
+            color: var(--accent);
+        }
+        
+        .student-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+        
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .student-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .welcome-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-banner h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-banner p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .stat-icon.blue { background: rgba(0,122,204,0.1); color: var(--primary); }
+        .stat-icon.green { background: rgba(40,167,69,0.1); color: var(--success); }
+        .stat-icon.orange { background: rgba(255,193,7,0.1); color: var(--warning); }
+        .stat-icon.purple { background: rgba(102,126,234,0.1); color: #667eea; }
+        
+        .stat-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .stat-info p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .course-image {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+        }
+        
+        .course-image.programming { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .course-image.design { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .course-image.business { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .course-image.science { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        
+        .course-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .course-content {
+            padding: 20px;
+        }
+        
+        .course-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .course-content p {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #e1e5e9;
+        }
+        
+        .course-level {
+            padding: 4px 12px;
+            background: var(--light);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .course-duration {
+            color: #718096;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .enrolled-badge {
+            background: var(--success);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,122,204,0.3);
+        }
+        
+        .enrolled-courses {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        .enrolled-course-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-bottom: 1px solid #e1e5e9;
+        }
+        
+        .enrolled-course-item:last-child {
+            border-bottom: none;
+        }
+        
+        .enrolled-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .enrolled-info {
+            flex: 1;
+        }
+        
+        .enrolled-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar-container {
+            width: 200px;
+            height: 8px;
+            background: #e1e5e9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        
+        .quiz-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .quiz-card {
+            padding: 25px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quiz-card:hover {
+            border-color: var(--primary);
+            background: rgba(0,122,204,0.05);
+            transform: translateY(-3px);
+        }
+        
+        .quiz-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-card.math i { color: #667eea; }
+        .quiz-card.science i { color: #28a745; }
+        .quiz-card.history i { color: #ed8936; }
+        .quiz-card.geography i { color: #00d4ff; }
+        
+        .quiz-card h4 {
+            margin-bottom: 5px;
+        }
+        
+        .quiz-card p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .quiz-history {
+            margin-top: 30px;
+        }
+        
+        .quiz-history h3 {
+            margin-bottom: 15px;
+        }
+        
+        .quiz-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--light);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .quiz-result-item .score {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .quiz-result-item .score.high { color: var(--success); }
+        .quiz-result-item .score.medium { color: var(--warning); }
+        .quiz-result-item .score.low { color: var(--danger); }
+        
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .achievement-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            opacity: 0.5;
+            filter: grayscale(1);
+            transition: all 0.3s;
+        }
+        
+        .achievement-card.unlocked {
+            opacity: 1;
+            filter: grayscale(0);
+        }
+        
+        .achievement-card i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .achievement-card.unlocked i { color: var(--warning); }
+        
+        .achievement-card h4 {
+            margin-bottom: 5px;
+        }
+        
+        .achievement-card p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .logout-btn {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(252,129,129,0.3);
+            color: #fc8181;
+        }
+        
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .courses-grid { grid-template-columns: repeat(2, 1fr); }
+            .quiz-grid { grid-template-columns: repeat(2, 1fr); }
+            .achievements { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 768px) {
+            .student-nav { flex-direction: column; gap: 15px; }
+            .student-menu { flex-wrap: wrap; justify-content: center; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .courses-grid { grid-template-columns: 1fr; }
+            .quiz-grid { grid-template-columns: 1fr; }
+            .achievements { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="student-nav">
+        <div class="student-logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>RP-TECH Student Portal</span>
+        </div>
+        <div class="student-menu">
+            <a href="#" class="active" data-page="dashboard">Dashboard</a>
+            <a href="#" data-page="courses">Courses</a>
+            <a href="#" data-page="quizzes">Quizzes</a>
+            <a href="#" data-page="progress">My Progress</a>
+            <a href="#" data-page="achievements">Achievements</a>
+        </div>
+        <div class="student-profile">
+            <div class="student-avatar" id="userAvatar">S</div>
+            <span id="userName">Student</span>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>
+    
+    <div class="student-container">
+        <!-- Dashboard Page -->
+        <div id="dashboard-page">
+            <div class="welcome-banner">
+                <h1>Welcome back, <span id="welcomeName">Student</span>!</h1>
+                <p>Ready to continue learning? You're making great progress!</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statCourses">0</h3>
+                        <p>Courses Enrolled</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statScore">0%</h3>
+                        <p>Average Score</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statTime">0h</h3>
+                        <p>Study Time</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statCert">0</h3>
+                        <p>Certificates</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Recommended For You</h2>
+            <div class="courses-grid" id="recommendedCourses"></div>
+        </div>
+        
+        <!-- Courses Page -->
+        <div id="courses-page" style="display: none;">
+            <h2 class="section-title">All Courses</h2>
+            <div class="filter-container" style="margin-bottom: 25px;">
+                <button class="filter-btn active" onclick="filterCourses('all')">All</button>
+                <button class="filter-btn" onclick="filterCourses('programming')">Programming</button>
+                <button class="filter-btn" onclick="filterCourses('design')">Design</button>
+                <button class="filter-btn" onclick="filterCourses('business')">Business</button>
+                <button class="filter-btn" onclick="filterCourses('science')">Science</button>
+            </div>
+            <div class="courses-grid" id="allCourses"></div>
+        </div>
+        
+        <!-- Quizzes Page -->
+        <div id="quizzes-page" style="display: none;">
+            <h2 class="section-title">Take a Quiz</h2>
+            <div class="quiz-section">
+                <div class="quiz-grid">
+                    <div class="quiz-card math" onclick="startQuiz('mathematics')">
+                        <i class="fas fa-calculator"></i>
+                        <h4>Mathematics</h4>
+                        <p>3 questions</p>
+                    </div>
+                    <div class="quiz-card science" onclick="startQuiz('science')">
+                        <i class="fas fa-microscope"></i>
+                        <h4>Science</h4>
+                        <p>3 questions</p>
+                    </div>
+                    <div class="quiz-card history" onclick="startQuiz('history')">
+                        <i class="fas fa-landmark"></i>
+                        <h4>History</h4>
+                        <p>3 questions</p>
+                    </div>
+                    <div class="quiz-card geography" onclick="startQuiz('geography')">
+                        <i class="fas fa-globe"></i>
+                        <h4>Geography</h4>
+                        <p>3 questions</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quiz-history">
+                <h3>Your Quiz History</h3>
+                <div id="quizHistory"></div>
+            </div>
+        </div>
+        
+        <!-- Progress Page -->
+        <div id="progress-page" style="display: none;">
+            <h2 class="section-title">My Enrolled Courses</h2>
+            <div class="enrolled-courses" id="enrolledCourses">
+                <p style="text-align: center; color: #718096;">No courses enrolled yet. Browse our courses to get started!</p>
+            </div>
+            
+            <h2 class="section-title">Study Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="quizzesCompleted">0</h3>
+                        <p>Quizzes Completed</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-star"></i></div>
+                    <div class="stat-info">
+                        <h3 id="bestScore">0%</h3>
+                        <p>Best Score</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fas fa-fire"></i></div>
+                    <div class="stat-info">
+                        <h3 id="currentStreak">0</h3>
+                        <p>Day Streak</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fas fa-clock"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalStudyTime">0h</h3>
+                        <p>Total Study Time</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Achievements Page -->
+        <div id="achievements-page" style="display: none;">
+            <h2 class="section-title">Your Achievements</h2>
+            <div class="achievements">
+                <div class="achievement-card" id="achievement1">
+                    <i class="fas fa-rocket"></i>
+                    <h4>First Steps</h4>
+                    <p>Enroll in your first course</p>
+                </div>
+                <div class="achievement-card" id="achievement2">
+                    <i class="fas fa-brain"></i>
+                    <h4>Quick Learner</h4>
+                    <p>Complete 5 quizzes</p>
+                </div>
+                <div class="achievement-card" id="achievement3">
+                    <i class="fas fa-crown"></i>
+                    <h4>Top Student</h4>
+                    <p>Score 100% on any quiz</p>
+                </div>
+                <div class="achievement-card" id="achievement4">
+                    <i class="fas fa-book-reader"></i>
+                    <h4>Bookworm</h4>
+                    <p>Enroll in 5 courses</p>
+                </div>
+                <div class="achievement-card" id="achievement5">
+                    <i class="fas fa-fire-alt"></i>
+                    <h4>On Fire</h4>
+                    <p>7 day learning streak</p>
+                </div>
+                <div class="achievement-card" id="achievement6">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h4>Graduate</h4>
+                    <p>Complete a course</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="student.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RP-TECH COURSES</title>
+    <meta name="description" content="Modern educational platform with interactive courses and quizzes">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                <span>RP-TECH</span>
+            </div>
+            <ul class="nav-menu" role="menubar">
+                <li class="nav-item" role="none">
+                    <a href="#home" class="nav-link home-btn" role="menuitem">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item" role="none">
+                    <a href="#courses" class="nav-link" role="menuitem">Courses</a>
+                </li>
+                <li class="nav-item" role="none">
+                    <a href="#quiz" class="nav-link" role="menuitem">Quiz</a>
+                </li>
+                <li class="nav-item" role="none">
+                    <a href="#dashboard" class="nav-link" role="menuitem">Dashboard</a>
+                </li>
+                <li class="nav-item" role="none">
+                    <button class="login-btn" onclick="showLoginModal()" aria-label="Login to your account">Login</button>
+                </li>
+            </ul>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Master New Skills with RP-TECH Courses</h1>
+                <p class="hero-description">Unlock your potential with our cutting-edge courses designed for modern learners. Start your journey today!</p>
+                <div class="hero-buttons">
+                    <a href="#courses" class="btn btn-primary">Explore Courses</a>
+                    <a href="#quiz" class="btn btn-secondary">Take a Quiz</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-graphic">
+                    <i class="fas fa-laptop-code"></i>
+                    <i class="fas fa-brain"></i>
+                    <i class="fas fa-certificate"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="courses">
+        <div class="container">
+            <h2 class="section-title">RP-TECH Course Catalog</h2>
+            <p class="section-description">Build your future with cutting-edge technology courses designed for modern learners.</p>
+            <div class="filter-container" role="group" aria-label="Filter courses by category">
+                <button class="filter-btn active" onclick="filterCourses('all')" aria-pressed="true">All</button>
+                <button class="filter-btn" onclick="filterCourses('programming')" aria-pressed="false">Programming</button>
+                <button class="filter-btn" onclick="filterCourses('design')" aria-pressed="false">Design</button>
+                <button class="filter-btn" onclick="filterCourses('business')" aria-pressed="false">Business</button>
+                <button class="filter-btn" onclick="filterCourses('science')" aria-pressed="false">Science</button>
+            </div>
+            <div class="courses-grid" id="coursesGrid">
+                <!-- Courses will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="quiz">
+        <div class="container">
+            <h2 class="section-title">Test Your Knowledge</h2>
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h3 id="quizTitle">Select a Quiz</h3>
+                    <div class="quiz-progress">
+                        <span id="questionNumber">0</span> / <span id="totalQuestions">0</span>
+                    </div>
+                </div>
+                <div class="quiz-content">
+                    <div id="quizSelection" class="quiz-selection">
+                        <p>Choose a subject to test your knowledge:</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option-btn" onclick="startQuiz('mathematics')">
+                                <i class="fas fa-calculator"></i>
+                                Mathematics
+                            </button>
+                            <button class="quiz-option-btn" onclick="startQuiz('science')">
+                                <i class="fas fa-microscope"></i>
+                                Science
+                            </button>
+                            <button class="quiz-option-btn" onclick="startQuiz('history')">
+                                <i class="fas fa-landmark"></i>
+                                History
+                            </button>
+                            <button class="quiz-option-btn" onclick="startQuiz('geography')">
+                                <i class="fas fa-globe"></i>
+                                Geography
+                            </button>
+                        </div>
+                    </div>
+                    <div id="quizQuestions" class="quiz-questions hidden">
+                        <div id="questionContainer"></div>
+                        <div class="quiz-actions">
+                            <button class="btn btn-secondary" onclick="previousQuestion()" id="prevBtn">Previous</button>
+                            <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn">Next</button>
+                            <button class="btn btn-success" onclick="submitQuiz()" id="submitBtn" style="display: none;">Submit</button>
+                        </div>
+                    </div>
+                    <div id="quizResults" class="quiz-results hidden">
+                        <div class="results-content">
+                            <i class="fas fa-trophy"></i>
+                            <h3>Quiz Complete!</h3>
+                            <p id="scoreMessage"></p>
+                            <button class="btn btn-primary" onclick="resetQuiz()">Take Another Quiz</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard">
+        <div class="container">
+            <h2 class="section-title">Your Dashboard</h2>
+            <div class="dashboard-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-book"></i>
+                        <div class="stat-info">
+                            <h3 id="coursesEnrolled">0</h3>
+                            <p>Courses Enrolled</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-trophy"></i>
+                        <div class="stat-info">
+                            <h3 id="quizScores">0</h3>
+                            <p>Quiz Average</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock"></i>
+                        <div class="stat-info">
+                            <h3 id="studyTime">0h</h3>
+                            <p>Study Time</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-certificate"></i>
+                        <div class="stat-info">
+                            <h3 id="certificates">0</h3>
+                            <p>Certificates</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-section">
+                    <h3>Recent Progress</h3>
+                    <div id="progressList" class="progress-list">
+                        <!-- Progress items will be dynamically added -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                <span>RP-TECH</span>
+                    </div>
+                    <p>Empowering learners worldwide with interactive educational content.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#quiz">Quiz</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EduLearn. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+        <div class="modal-content">
+            <button class="close" onclick="closeLoginModal()" aria-label="Close login modal">&times;</button>
+            <h2 id="loginTitle">Login to RP-TECH</h2>
+            <form id="loginForm" data-register="false">
+                <div class="form-group" id="nameGroup" style="display: none;">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password" minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary" id="authBtn">Login</button>
+            </form>
+            <p class="signup-link">Don't have an account? <a href="#" onclick="toggleAuthMode(event)">Sign up</a></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
