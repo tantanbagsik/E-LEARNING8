@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/index.html"
+    }
+  ],
+  "env": {
+    "SUPABASE_URL": "https://jshbvstypephzvizaiaf.supabase.co",
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzaGJ2c3R5cGVwaHp2aXphaWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0ODM2MDcsImV4cCI6MjA4OTA1OTYwN30.4MuWqtAQxDIsYyFET7HbrE20KMG76lT0nzkxNwW0kaY",
+    "JWT_SECRET": "rptech123"
+  }
+}
