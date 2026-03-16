@@ -1,4 +1,4 @@
-const API_URL = '/api';
+const API_URL = 'http://localhost:5000/api';
 let allUsers = [];
 let allCourses = [];
 
